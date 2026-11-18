@@ -14,7 +14,7 @@ class DemoUserSeeder extends Seeder
     public function run(): void
     {
         $this->user(
-            name: 'Enrique Muhammad Ilham',
+            name: 'Enrique Muhammad',
             email: 'admin@example.com',
             role: RoleName::SuperAdmin,
         );

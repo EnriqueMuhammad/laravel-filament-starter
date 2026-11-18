@@ -8,7 +8,7 @@ A production-minded Laravel and Filament starter: an admin panel for a small cat
 [![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)](https://www.php.net)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-Author: **Enrique Muhammad Ilham**.
+Author: **Enrique Muhammad**.
 
 ## Screenshots
 
@@ -85,7 +85,7 @@ These accounts are seeded for a local demo. Do not reuse the password anywhere e
 | Inventory manager | `manager@example.com` | `password` | Create and edit the catalog and ledger |
 | Auditor | `viewer@example.com` | `password` | Read the catalog and ledger |
 
-The super admin is Enrique Muhammad Ilham. Filament Shield bypasses policies for the `super_admin` role. Managers do not see role management.
+The super admin is Enrique Muhammad. Filament Shield bypasses policies for the `super_admin` role. Managers do not see role management.
 
 ## What the demo shows
 
@@ -145,4 +145,4 @@ GitHub Actions (`.github/workflows/ci.yml`) runs Pint, Larastan, Pest on MySQL, 
 
 ## License
 
-MIT. Copyright (c) 2026 Enrique Muhammad Ilham.
+MIT. Copyright (c) 2026 Enrique Muhammad.
