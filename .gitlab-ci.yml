@@ -1,0 +1,57 @@
+stages:
+  - lint
+  - test
+  - build
+
+variables:
+  COMPOSER_NO_INTERACTION: "1"
+
+.php: &php
+  image: php:8.4-cli-bookworm
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends git unzip libicu-dev libzip-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev
+    - docker-php-ext-configure gd --with-freetype --with-jpeg
+    - docker-php-ext-install -j$(nproc) bcmath gd intl pdo_mysql zip
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --prefer-dist --no-progress
+
+pint:
+  <<: *php
+  stage: lint
+  script:
+    - vendor/bin/pint --test
+
+larastan:
+  <<: *php
+  stage: lint
+  script:
+    - vendor/bin/phpstan analyse --memory-limit=1G --no-progress
+
+test:
+  <<: *php
+  stage: test
+  services:
+    - name: mysql:8.4.13
+      alias: mysql
+  variables:
+    MYSQL_DATABASE: inventory_testing
+    MYSQL_ROOT_PASSWORD: root
+    DB_CONNECTION: mysql
+    DB_HOST: mysql
+    DB_PORT: "3306"
+    DB_DATABASE: inventory_testing
+    DB_USERNAME: root
+    DB_PASSWORD: root
+  script:
+    - php artisan test
+
+docker:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  script:
+    - docker build --target production -t laravel-filament-starter:ci .
